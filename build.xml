@@ -97,7 +97,7 @@
   <!-- Location of the Java 6 boot classpath. If this is not set, the compiler
        will resort to the default boot classpath. -->
   <property environment="env"/>
-  <property name="java6.boot.classpath" value="${env.JAVA6_BOOTCLASSES}"/>
+  <property name="java8.boot.classpath" value="${env.JAVA8_BOOTCLASSES}"/>
   
   <!-- The location of rt.jar, if it is there -->
   <property name="build.rtlocation">rt.jar</property>
@@ -161,8 +161,8 @@
         <echo message="Local bootstrap JAR is not present"/>
       </else>
     </if>
-    <var name="java6.boot.classpath" unset="true"/>
-    <property name="java6.boot.classpath" value="${build.rtlocation}"/>
+    <var name="java8.boot.classpath" unset="true"/>
+    <property name="java8.boot.classpath" value="${build.rtlocation}"/>
   </target>
   
   <!-- Target: zip
@@ -186,10 +186,11 @@
   <target name="compile" depends="init,junit,check-rt" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
     <javac
-      target="1.6" source="1.6"
-      bootclasspath="${java6.boot.classpath}"
+      target="1.8" source="1.8"
+      bootclasspath="${java8.boot.classpath}"
       srcdir="${build.srcdir}"
       destdir="${build.bindir}"
+      Encoding="utf8"
       debug="${build.debug}"
       includeantruntime="false">
       <classpath refid="build.classpath"/>
@@ -208,8 +209,8 @@
   <target name="compile-tests" depends="init,compile,junit" description="Compile the test sources">
     <mkdir dir="${build.test.bindir}"/>
     <javac
-      target="1.6" source="1.6"
-      bootclasspath="${java6.boot.classpath}"
+      target="1.8" source="1.8"
+      bootclasspath="${java8.boot.classpath}"
       srcdir="${build.test.srcdir}"
       destdir="${build.test.bindir}"
       includeantruntime="false">
