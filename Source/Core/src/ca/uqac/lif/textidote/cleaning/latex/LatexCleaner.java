@@ -375,8 +375,8 @@ public class LatexCleaner extends TextCleaner
 		as_out = replaceInlineEquations(as_out, line_pos);
 		/*as_out = as_out.replaceAll("([^\\\\])\\$.*?[^\\\\]\\$", "$1X");
 		//as_out = as_out.replaceAll("^\\$.*?[^\\\\]\\$", "X");
-		as_out = as_out.replaceAll("^\\$([^\\$]|\\.)*\\$", "X");
-		as_out = as_out.replaceAll("\\\\\\(.*?\\\\\\)", "X");*/
+		as_out = as_out.replaceAll("^\\$([^\\$]|\\.)*\\$", "X");*/
+		as_out = as_out.replaceAll("\\\\\\(.*?\\\\\\)", "X");
 		// Commands we can ignore
 		as_out = as_out.replaceAll("\\\\\\w+\\{", "");
 		//as_out = as_out.replaceAll("\\\\(title|textbf|textit|emph|uline|section|subsection|subsubsection|paragraph)", "");
