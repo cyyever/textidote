@@ -107,11 +107,11 @@
        depend on this one (except perhaps very simple ones such as
        "clean".
   -->
-  <target name="init" depends="ant-contrib,xmltask"
+  <target name="init" depends="xmltask"
     description="Initialize the project">
     <!-- Load ant-contrib -->
     <taskdef resource="net/sf/antcontrib/antlib.xml"
-      classpath="${build.libdir}/ant-contrib-1.0b3.jar"/>
+      classpath="ant-contrib.jar"/>
     <!-- Load xmltask -->
     <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"
       classpath="${build.libdir}/${xmltask.jarname}"/>
@@ -391,25 +391,6 @@
     The following targets download the necessary dependencies
     the build script requires
     ========================================== -->
-  
-  <!-- Target: ant-contrib.
-       Downloads ant-contrib, only if it does not exist
-  -->
-  <condition property="ant-contrib.absent" value="false" else="true">
-    <available file="${build.libdir}/ant-contrib-1.0b3.jar"/>
-  </condition>
-  <target name="ant-contrib" if="${ant-contrib.absent}"
-    description="Install ant-contrib if not present">
-    <echo message="ant-contrib is not installed. Downloading..." level="info"/>
-    <mkdir dir="${build.libdir}"/>
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/ant-contrib-1.0b3-bin.zip" dest="${build.libdir}/ant-contrib-1.0b3-bin.zip"/>
-    <unzip src="${build.libdir}/ant-contrib-1.0b3-bin.zip" dest="${build.libdir}">
-      <patternset>
-        <include name="**/*.jar"/>
-      </patternset>
-      <mapper type="flatten"/>
-    </unzip>
-  </target>
   
   <!-- Target: xmltask
        Download XmlTask JAR if not present, and put it in the lib folder
