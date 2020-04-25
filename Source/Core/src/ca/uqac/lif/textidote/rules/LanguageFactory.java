@@ -19,23 +19,15 @@ package ca.uqac.lif.textidote.rules;
 
 import org.languagetool.Language;
 import org.languagetool.language.AmericanEnglish;
-import org.languagetool.language.AustrianGerman;
 import org.languagetool.language.BritishEnglish;
 import org.languagetool.language.CanadianEnglish;
-import org.languagetool.language.Dutch;
-import org.languagetool.language.French;
-import org.languagetool.language.GermanyGerman;
-import org.languagetool.language.Portuguese;
-import org.languagetool.language.BrazilianPortuguese;
-import org.languagetool.language.Spanish;
-import org.languagetool.language.SwissGerman;
 
 /**
  * Factory class whose sole purpose is to provide instances of {@code Language}
  * objects.
  * @author Sylvain Hallé
  */
-public class LanguageFactory 
+public class LanguageFactory
 {
 	/**
 	 * Instantiates a Language object based on a string
@@ -56,38 +48,6 @@ public class LanguageFactory
 		if (s.compareToIgnoreCase("en_UK") == 0)
 		{
 			return new BritishEnglish();
-		}
-		if (s.compareToIgnoreCase("fr") == 0 || s.compareToIgnoreCase("fr_CA") == 0)
-		{
-			return new French();
-		}
-		if (s.compareToIgnoreCase("es") == 0)
-		{
-			return new Spanish();
-		}
-		if (s.compareToIgnoreCase("de") == 0 || s.compareToIgnoreCase("de_DE") == 0)
-		{
-			return new GermanyGerman();
-		}
-		if (s.compareToIgnoreCase("de_CH") == 0)
-		{
-			return new SwissGerman();
-		}
-		if (s.compareToIgnoreCase("de_AT") == 0)
-		{
-			return new AustrianGerman();
-		}
-		if (s.compareToIgnoreCase("nl") == 0)
-		{
-			return new Dutch();
-		}
-		if (s.compareToIgnoreCase("pt") == 0)
-		{
-			return new Portuguese();
-		}
-		if (s.compareToIgnoreCase("pt_BR") == 0)
-		{
-			return new BrazilianPortuguese();
 		}
 		return null;
 	}
