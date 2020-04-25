@@ -618,7 +618,8 @@ public class AnnotatedString
 			Position new_pos = m.getPosition();
 			AnnotatedString rep = replaced.replace(regex, to, last_pos);
 			replaced = rep;
-			last_pos = new_pos.moveBy(1);
+			last_pos = new_pos;
+            // .moveBy(1);
 		}
 		return replaced;
 	}

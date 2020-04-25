@@ -54,17 +54,17 @@ public class LatexCleaner extends TextCleaner
 	 * <tt>\begin{document}</tt>
 	 */
 	protected boolean m_ignoreBeforeDocument = true;
-	
+
 	/**
 	 * A set of additional environment names to remove when cleaning up
 	 */
 	/*@ non_null @*/ protected final Set<String> m_environmentsToIgnore = new HashSet<String>();
-	
+
 	/**
 	 * A set of additional macro names to remove when cleaning up
 	 */
 	/*@ non_null @*/ protected final Set<String> m_macrosToIgnore = new HashSet<String>();
-	
+
 	/**
 	 * A list of <em>non-commented</em> <tt>input</tt> and <tt>include</tt>
 	 * declarations found in the file to be cleaned.
@@ -76,7 +76,7 @@ public class LatexCleaner extends TextCleaner
 	 * declarations in a line of markup.
 	 */
 	protected static final transient Pattern m_includePattern = Pattern.compile("^.*\\\\(input|include)\\s*\\{(.*?)\\}.*$");
-	
+
 	/**
 	 * Adds a new environment name to remove when cleaning up
 	 * @param e_name The name of the environment
@@ -87,7 +87,7 @@ public class LatexCleaner extends TextCleaner
 		m_environmentsToIgnore.add(e_name);
 		return this;
 	}
-	
+
 	/**
 	 * Adds new environment names to remove when cleaning up
 	 * @param e_names A collection of environment names
@@ -98,7 +98,7 @@ public class LatexCleaner extends TextCleaner
 		m_environmentsToIgnore.addAll(e_names);
 		return this;
 	}
-	
+
 	/**
 	 * Adds a new macro name to remove when cleaning up
 	 * @param m_name The name of the macro
@@ -109,7 +109,7 @@ public class LatexCleaner extends TextCleaner
 		m_macrosToIgnore.add(m_name);
 		return this;
 	}
-	
+
 	/**
 	 * Adds new macro names to remove when cleaning up
 	 * @param m_names A collection of macro names
@@ -135,7 +135,7 @@ public class LatexCleaner extends TextCleaner
 		//new_as = simplifySpaces(new_as);
 		return new_as;
 	}
-	
+
 	/**
 	 * Remove user-defined macros that should not be interpreted as text
 	 * @param as The string to clean
@@ -204,7 +204,7 @@ public class LatexCleaner extends TextCleaner
 		}
 		return as;
 	}
-	
+
 	/**
 	 * Determines if the current line contains the start of an environment
 	 * to remove from the markup
@@ -228,7 +228,7 @@ public class LatexCleaner extends TextCleaner
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Determines if the current line contains the end of an environment
 	 * to remove from the markup
@@ -295,7 +295,7 @@ public class LatexCleaner extends TextCleaner
 	}
 
 	/**
-	 * Removes LaTeX commands from a string 
+	 * Removes LaTeX commands from a string
 	 * @param as The string to clean
 	 * @return A string with the environments removed
 	 */
@@ -336,6 +336,7 @@ public class LatexCleaner extends TextCleaner
 		// Line breaks and paragraphs
 		as_out = as_out.replaceAll("\\\\\\\\", "");
 		as_out = as_out.replaceAll("\\\\par(\\b)", "$1");
+		as_out = as_out.replaceAll("\\\\clearpage","");
 		// Common environments
 		as_out = as_out.replaceAll("\\\\(begin|end)\\{(itemize|enumerate|inparaenum|document|thm|abstract|eqnarray|compactitem|query|center|minipage|quote|frame)\\}", "");
 		// List items
@@ -355,6 +356,8 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("\\\\(ref|url|eqref|cref|Cref)\\{.*?\\}", "X");
 		// Titles
 		as_out = as_out.replaceAll("\\\\maketitle|\\\\newpage", "");
+		// Appendixes
+		as_out = as_out.replaceAll("\\\\appendix\\w*", "");
 		// Font commands
 		as_out = as_out.replaceAll("\\\\(tiny|scriptsize|footnotesize|small|normalsize|large|Large|LARGE|huge|Huge)", "");
 		// Inputs and includes
@@ -362,7 +365,9 @@ public class LatexCleaner extends TextCleaner
 		// Conditional hyphens
 		as_out = as_out.replaceAll("\\\\\\-", "");
 		// Non-breaking spaces
-		as_out = as_out.replaceAll("~", " ");
+		as_out = as_out.replaceAll("([^\\\\]?)~", "$1 ");
+		// Spaces
+		as_out = as_out.replaceAll("\\\\ ", " ");
 		// Dots
 		as_out = as_out.replaceAll("\\\\(dots|cdots|ldots)", "...");
 		// Inline display math with only digits and letters
@@ -370,7 +375,7 @@ public class LatexCleaner extends TextCleaner
 		// Otherwise, replace by X
 		as_out = as_out.replaceAll("\\\\\\(.*?\\\\\\)", "X");
 		// Equations are removed
-		as_out = as_out.replaceAll("\\\\\\[.*?\\\\\\]", "");
+		as_out = as_out.replaceAll("\\\\\\[.*?\\\\\\]", "X");
 		// Inline equations in old TeX style ("$foo$")
 		as_out = replaceInlineEquations(as_out, line_pos);
 		/*as_out = as_out.replaceAll("([^\\\\])\\$.*?[^\\\\]\\$", "$1X");
@@ -378,13 +383,15 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("^\\$([^\\$]|\\.)*\\$", "X");*/
 		as_out = as_out.replaceAll("\\\\\\(.*?\\\\\\)", "X");
 		// Commands we can ignore
-		as_out = as_out.replaceAll("\\\\\\w+\\{", "");
-		//as_out = as_out.replaceAll("\\\\(title|textbf|textit|emph|uline|section|subsection|subsubsection|paragraph)", "");
+		as_out = as_out.replaceAll("\\\\\\w+\\{", "{");
+		as_out = as_out.replaceAll("\\\\\\w+\\[", "[");
+		as_out = as_out.replaceAll("\\\\\\w+", "X");
 		// Curly brackets
+		as_out = as_out.replaceAll("\\{\\}", "X");
 		as_out = as_out.replaceAll("\\{|\\}", "");
 		return as_out;
 	}
-	
+
 	protected AnnotatedString replaceInlineEquations(AnnotatedString as_out, int line_pos)
 	{
 		Match m = null;
@@ -407,7 +414,7 @@ public class LatexCleaner extends TextCleaner
 			as_out = as_out.replaceAll(Pattern.quote(s_from), s_to);
 			p = p.moveBy(1); // To ensure progress
 		} while (m != null);
-		// Do it one last time for equations at the beginning of a line		
+		// Do it one last time for equations at the beginning of a line
 		m = as_out.find("^\\$.*?[^\\\\]\\$", p);
 		if (m != null)
 		{
@@ -423,7 +430,7 @@ public class LatexCleaner extends TextCleaner
 		}
 		return as_out;
 	}
-	
+
 	/**
 	 * Replaces escaped accented character sequences by their proper character
 	 * @param as_out The string to replace from
@@ -473,7 +480,7 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("\\\\'\\{u\\}", "ú");
 		as_out = as_out.replaceAll("\\\\^\\{u\\}", "û");
 		as_out = as_out.replaceAll("\\\\~\\{u\\}", "ũ");
-		
+
 		// Without braces
 		as_out = as_out.replaceAll("\\\\`A", "À");
 		as_out = as_out.replaceAll("\\\\'A", "Á");
@@ -538,7 +545,7 @@ public class LatexCleaner extends TextCleaner
 		m_ignoreBeforeDocument = b;
 		return this;
 	}
-	
+
 	/**
 	 * Populates a list of <em>non-commented</em> <tt>input</tt> and
 	 * <tt>include</tt> declarations found in the file to be cleaned.
@@ -561,7 +568,7 @@ public class LatexCleaner extends TextCleaner
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the list of <em>non-commented</em> <tt>input</tt> and
 	 * <tt>include</tt> declarations found in the file to be cleaned.
