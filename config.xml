@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
   Configuration file for AntRun.
-  
+
   Use this file to override the default properties contained
   in build.xml. For example, to override the build.jar.filename
   property (which sets the name of the compiled jar file), add
   an element
-  
+
   <jar>
     <filename>foo</filename>
   </jar>
-  
+
   inside the <build> element.
-  
+
   **Caveat emptor:** in some cases, changing this file and running ant
   again will result in Ant using a cached version of the old file! Run
   "ant dummy" to make sure that the correct data is being read. Otherwise
@@ -24,17 +24,17 @@
 
   <!-- The project's name -->
   <name>TeXtidote</name>
-  
+
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
-  
+
   <!-- The project's version number -->
   <version>0.8.1</version>
-  
+
   <!-- The project's main class -->
   <mainclass>ca.uqac.lif.textidote.Main</mainclass>
-  
+
   <!-- Redefine directories -->
   <srcdir>Source/Core/src</srcdir>
   <bindir>Source/Core/bin</bindir>
@@ -44,18 +44,29 @@
     <srcdir>Source/CoreTest/src</srcdir>
     <bindir>Source/CoreTest/bin</bindir>
   </test>
-  
+
   <!-- Output jar -->
   <jar>
     <filename>textidote.jar</filename>
     <withdoc>false</withdoc>
     <withdeps>true</withdeps>
   </jar>
-  
+
   <!--
     Write JAR dependencies here.
   -->
   <dependencies>
+    <dependency>
+      <!--
+      Language Tool. Checks grammar on plain text.
+      -->
+      <name>Language Tool</name>
+      <classname>org.languagetool.JLanguageTool</classname>
+      <files>
+        <jar>https://github.com/sylvainhalle/languagetool/releases/download/v4.6a-standalone/languagetool-bundle-4.6a.jar</jar>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
     <dependency>
       <!--
       Bullwinkle. Used mainly because of its Cli parser.
