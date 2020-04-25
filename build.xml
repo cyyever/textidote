@@ -402,7 +402,7 @@
     description="Install ant-contrib if not present">
     <echo message="ant-contrib is not installed. Downloading..." level="info"/>
     <mkdir dir="${build.libdir}"/>
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/ant-contrib-1.0b3-bin.zip" dest="${build.libdir}/ant-contrib-1.0b3-bin.zip"/>
+    <get src="https://nchc.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip" dest="${build.libdir}/ant-contrib-1.0b3-bin.zip"/>
     <unzip src="${build.libdir}/ant-contrib-1.0b3-bin.zip" dest="${build.libdir}">
       <patternset>
         <include name="**/*.jar"/>
