@@ -339,6 +339,8 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("\\\\clearpage","");
 		// Common environments
 		as_out = as_out.replaceAll("\\\\(begin|end)\\{(itemize|enumerate|inparaenum|document|thm|abstract|eqnarray|compactitem|query|center|minipage|quote|frame)\\}", "");
+		// Theorem environments
+		as_out = as_out.replaceAll("\\\\(begin|end)\\{(definition|lemma|proof|remark|assumption|conclusion)\\}", "");
 		// List items
 		as_out = as_out.replaceAll("\\\\item\\s*", "");
 		// Images
@@ -348,7 +350,8 @@ public class LatexCleaner extends TextCleaner
 		// Footnotes (ignore)
 		as_out = as_out.replaceAll("\\\\footnote\\{.*?\\}", "");
 		// Replace citations by dummy placeholder
-		as_out = as_out.replaceAll("\\\\(cite|citep|citel)(\\[.*?\\])*\\{.*?\\}", "[0]");
+		as_out = as_out.replaceAll("\\\\(cite|citep|citel|cref)(\\[.*?\\])*\\{.*?\\}", "[0]");
+		as_out = as_out.replaceAll("\\\\crefrange(\\[.*?\\])*(\\{[^}]*\\})*", "[0]");
 		// Replace verbatim by dummy placeholder
 		as_out = as_out.replaceAll("\\\\verb\\+[^\\+]*?\\+", "[0]");
 		as_out = as_out.replaceAll("\\\\verb\"[^\"]*?\"", "[0]");
