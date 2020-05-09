@@ -347,8 +347,8 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("\\\\includegraphics.*$", "");
 		// Commands that don't produce text
 		as_out = as_out.replaceAll("\\\\(label)\\{[^\\}]*?\\}", "");
-		// Footnotes (ignore)
-		as_out = as_out.replaceAll("\\\\footnote\\{.*?\\}", "");
+		// Footnotes
+		as_out = as_out.replaceAll("\\\\footnote\\{", " {");
 		// Replace citations by dummy placeholder
 		as_out = as_out.replaceAll("\\\\(cite|citep|citel|cref)(\\[.*?\\])*\\{.*?\\}", "[0]");
 		as_out = as_out.replaceAll("\\\\crefrange(\\[.*?\\])*(\\{[^}]*\\})*", "[0]");
