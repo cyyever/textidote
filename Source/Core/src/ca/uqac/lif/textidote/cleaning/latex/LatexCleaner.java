@@ -341,6 +341,8 @@ public class LatexCleaner extends TextCleaner
 		as_out = as_out.replaceAll("\\\\(begin|end)\\{(itemize|enumerate|inparaenum|document|thm|abstract|eqnarray|compactitem|query|center|minipage|quote|frame)\\}", "");
 		// Theorem environments
 		as_out = as_out.replaceAll("\\\\(begin|end)\\{(definition|lemma|proof|remark|assumption|conclusion)\\}", "");
+		// Figure environments
+		as_out = as_out.replaceAll("\\\\(begin|end)\\{(figure)\\}", "");
 		// List items
 		as_out = as_out.replaceAll("\\\\item\\s*", "");
 		// Images
