@@ -81,7 +81,7 @@ public class CheckCaptions extends Rule
 						int start_p = s.findOriginalIndex(new Position(line_cnt, start_pos));
 						int end_p = s.findOriginalIndex(new Position(line_cnt, i));
 						Range r = new Range(start_p, end_p);
-						out_list.add(new Advice(this, r, "A caption should end with a period", s, s.findOriginalLine(line_cnt)));
+						// out_list.add(new Advice(this, r, "A caption should end with a period", s, s.findOriginalLine(line_cnt)));
 						break;
 					}
 					period_seen = false;
