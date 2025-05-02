@@ -373,7 +373,7 @@ public class LatexCleaner extends TextCleaner
 		// Font commands
 		as_out = as_out.replaceAll("\\\\(tiny|scriptsize|footnotesize|small|normalsize|large|Large|LARGE|huge|Huge)", "");
 		// Inputs and includes
-		as_out = as_out.replaceAll("\\\\(input|include|documentclass|usepackage|noindent|vskip|vspace|vskip|hspace|rule|urlstyle|fancyfoot|fancyhead|pagestyle|thispagestyle|newcommand|renewcommand|bibliographystyle|bibliography|scalebox|printbibliography|addbibresource).*$", "");
+		as_out = as_out.replaceAll("\\\\(input|include|documentclass|usepackage|noindent|vskip|vspace|vskip|hspace|rule|urlstyle|fancyfoot|fancyhead|pagestyle|thispagestyle|newcommand|renewcommand|providecommand|bibliographystyle|bibliography|scalebox|printbibliography|addbibresource).*$", "");
 		// Conditional hyphens
 		as_out = as_out.replaceAll("\\\\\\-", "");
 		// Non-breaking spaces
